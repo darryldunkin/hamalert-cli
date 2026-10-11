@@ -870,7 +870,7 @@ async fn add_trigger(
 ) -> Result<(), Box<dyn Error>> {
     let trigger_data = TriggerData {
         conditions: Conditions {
-            callsign: callsign,
+            callsign: callsign.clone(),
             mode,
         },
         comment: comment.to_string(),
@@ -884,8 +884,7 @@ async fn add_trigger(
         .send()
         .await?;
 
-    // TODO - I do not know how to print this correctly
-    // println!("Add trigger status for {}: {}", callsign, response.status());
+    println!("Add trigger status for {}: {}", callsign.join(", "), response.status());
 
     // Optionally print the response body
     let body = response.text().await?;
